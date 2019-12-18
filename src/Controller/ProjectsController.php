@@ -114,4 +114,30 @@ class ProjectsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    //tag method
+    public function tags(){
+        $this->paginate = [
+            'contain' => ['Users', 'Clients', 'Categories']
+        ];
+        $this->set('projects', $this->paginate($this->Projects));
+        $this->set('_serialize', ['projects']);
+
+        $tags = $this->request->params['pass'];
+
+        $projects = $this->Projects->find('tagged', [
+            'tags' => $tags
+        ]);
+
+        //pass to view
+        $this->set([
+            'projects' => $projects,
+            'tags' => $tags
+        ]);
+    }
+
+    public function search(){
+        $tag = $this->request->data('searchtag');
+        return $this->redirect('/projects/tagged/'.$tag);
+    }
 }

@@ -113,4 +113,13 @@ class ProjectsTable extends Table
 
         return $rules;
     }
+
+    //findTagged Method
+    public function findTagged(Query $query, array $options){
+        return $this->find()
+        ->distinct(['Projects.id'])
+        ->matching('Tags', function($q) use ($options){
+            return $q->where(['Tags.title IN' => $options['tags']]);
+        });
+    }
 }

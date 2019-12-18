@@ -8,16 +8,13 @@
    <?= $this->Element('actions', array('type' => 'Project', 'typePlural' => 'Projects')); ?>
 </nav>
 <div class="projects index large-9 medium-8 columns content">
-    <h3><?= __('Projects') ?></h3>
+    <h3>Projects By Tag: <?= $this->Text->toList($tags) ?></h3>
     <?= $this->Element('searchtagform');?>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('client_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('launch') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
@@ -29,9 +26,6 @@
             <tr>
                 <td><?= $this->Number->format($project->id) ?></td>
                 <td><?= h($project->title) ?></td>
-                <td><?= $project->has('user') ? $this->Html->link($project->user->first_name, ['controller' => 'Users', 'action' => 'view', $project->user->id]) : '' ?></td>
-                <td><?= $project->has('client') ? $this->Html->link($project->client->company, ['controller' => 'Clients', 'action' => 'view', $project->client->id]) : '' ?></td>
-                <td><?= $project->has('category') ? $this->Html->link($project->category->name, ['controller' => 'Categories', 'action' => 'view', $project->category->id]) : '' ?></td>
                 <td><?= h($project->launch) ?></td>
                 <td><?= h($project->created) ?></td>
                 <td><?= h($project->modified) ?></td>

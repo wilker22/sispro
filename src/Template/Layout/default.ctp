@@ -44,7 +44,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <section class="top-bar-section">
             <!-- Direita-->
             <ul class="right">
-
+        <!-- se logado-->
+        <?php if($loggedIn): ?>
+                <li><?= $this->Html->link(__('Logout'), ['controller' => 'users', 'action' => 'logout']);?></li>
 
             </ul>
             <!--esquerda-->
@@ -55,8 +57,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <li><?= $this->Html->link(__('Notes'), ['controller' => 'notes', 'action' => 'index']); ?></li>
                 <li><?= $this->Html->link(__('Tags'), ['controller' => 'tags', 'action' => 'index']); ?></li>
                 <li><?= $this->Html->link(__('Users'), ['controller' => 'users', 'action' => 'index']); ?></li>
+        <?php else: ?>
 
+                <li><?= $this->Html->link(__('Login'), ['controller' => 'users', 'action' => 'login']); ?></li>
+                <li><?= $this->Html->link(__('Register'), ['controller' => 'users', 'action' => 'register']); ?></li>
+
+        <?php endif;?>
             </ul>
+
         </section>
     </nav>
     <?= $this->Flash->render() ?>

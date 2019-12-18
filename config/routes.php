@@ -8,6 +8,13 @@ use Cake\Routing\Route\DashedRoute;
 
 Router::defaultRouteClass(DashedRoute::class);
 
+Router::scope('/projects',
+    ['controller' => 'Projects'],
+    function($routes){
+        $routes->connect('/tagged/*', ['action' => 'tags']);
+    }
+);
+
 Router::scope('/posts', function($routes){
     $routes->connect('/',
         ['controller' => 'Posts']
@@ -39,7 +46,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->applyMiddleware('csrf');
 
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Projects', 'action' => 'index']);
 
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 

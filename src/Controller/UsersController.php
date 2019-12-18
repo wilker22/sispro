@@ -103,4 +103,44 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    //metodo de login
+    public function login(){
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+            if($user){
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            //login errado
+            $this->Flash->error('Login Incorreto');
+        }
+    }
+
+    public function logout()
+    {
+
+        $this->Flash->success('Você efetuou Logout!');
+        return $this->redirect($this->Auth->logout());
+    }
+
+    public function register()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Você foi registrado e agora poderá realizar login!!'));
+
+                return $this->redirect(['action' => 'login']);
+            }
+            $this->Flash->error(__('Registro não efetuado!'));
+        }
+        $this->set(compact('user'));
+    }
+
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
+        $this->Auth->allow(['register']);
+    }
 }
